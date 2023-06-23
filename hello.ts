@@ -45,12 +45,27 @@ fullNameObject({
 })
 
 const printInformation = (name: string, email?: string) => {
-  if (email) {
-    return `toi la ${name}, Email cua toi la ${email}`
-  } else {
-    return `toi la ${name}. Toi chua co Email`
-  }
+  // @ts-ignore
+  return new Promise(function(resolve, reject) {
+    console.log('start action')
+    setTimeout(() => {
+      if (email) {
+        resolve(`toi la ${name}, Email cua toi la ${email}`)
+      } else {
+        reject(`toi la ${name}. Toi chua co Email`)
+      }
+    }, 5000)
+  })
 }
 
-console.log(printInformation('cuong', 'cuong@gmail.com'))
-console.log(printInformation('cuong'))
+printInformation('cuong', 'cuong@gmail.com').then(response => {
+  console.log('ket qua tra ve', response)
+}).catch(error  => {
+  console.log('loi tra ve', error)
+})
+
+printInformation('cuong').then(response => {
+  console.log('ket qua tra ve', response)
+}).catch(error  => {
+  console.log('loi tra ve', error)
+})

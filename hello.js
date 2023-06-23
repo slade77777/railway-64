@@ -45,12 +45,26 @@ fullNameObject({
     lastName: "nguyen"
 });
 var printInformation = function (name, email) {
-    if (email) {
-        return "toi la ".concat(name, ", Email cua toi la ").concat(email);
-    }
-    else {
-        return "toi la ".concat(name, ". Toi chua co Email");
-    }
+    // @ts-ignore
+    return new Promise(function (resolve, reject) {
+        console.log('start action');
+        setTimeout(function () {
+            if (email) {
+                resolve("toi la ".concat(name, ", Email cua toi la ").concat(email));
+            }
+            else {
+                reject("toi la ".concat(name, ". Toi chua co Email"));
+            }
+        }, 5000);
+    });
 };
-console.log(printInformation('cuong', 'cuong@gmail.com'));
-console.log(printInformation('cuong'));
+printInformation('cuong', 'cuong@gmail.com').then(function (response) {
+    console.log('ket qua tra ve', response);
+}).catch(function (error) {
+    console.log('loi tra ve', error);
+});
+printInformation('cuong').then(function (response) {
+    console.log('ket qua tra ve', response);
+}).catch(function (error) {
+    console.log('loi tra ve', error);
+});
